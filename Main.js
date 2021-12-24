@@ -1,24 +1,38 @@
 "use strict"
 
-function takeInput(){
-   let validInput = false;
-   while(!validInput) {
-      let cells = +prompt("Enter the number of cells");
-      if(cells < 4){
-         alert("Minimum number of cells is 4. Enter a higher value.")
+const GRID_MIN = 40;
+const GRID_MAX = 100;
+let gridArray = [];
+
+function start() {
+   let input = userInput();
+   if(userInput == null){
+      return;
+   }
+   createGrid(input);
+   colorGrid(gridArray);
+   clearButton();
+}
+
+function userInput(){
+   while(true) {
+      let cells = prompt("Enter the number of cells");
+      if(cells == null) {
+         return null;
+      }
+      if(+cells < GRID_MIN){
+         alert(`Minimum number of cells is ${GRID_MIN}. Enter a higher value.`)
       } 
-      else if(cells > 50) {
-         alert("Maximum allowed cell limit is 50. Enter a lower value.");
+      else if(+cells > GRID_MAX) {
+         alert(`Maximum allowed cell limit is ${GRID_MAX}. Enter a lower value.`);
       }
       else {
-         validInput = true;
-         createGrid(cells);
+         return +cells;
       }
    }
 }
 
 function createGrid(cells) {
-   let gridArray = [];
    for(let i = 0; i < cells**2; i++) {
       let temp = document.createElement("div");
       temp.classList.add("gridItem");
@@ -38,6 +52,17 @@ function createGrid(cells) {
    }
 }
 
+function colorGrid(gridArray) {
+   for(let item of gridArray) {
+      item.addEventListener("mouseover", (event) => {
+         event.target.classList.add("changeBg");
+      }, {once: true});
+   }
+}
 
+function clearButton() {
+   let clearButton = document.querySelector(".clearBtn button");
+   clearButton.addEventListener("click", () => location.reload());
+}
 
-takeInput();
+start();
