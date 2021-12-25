@@ -7,8 +7,17 @@
    <title>Sketcher</title>
 </head>
 <body>
-   <div class="clearBtn"><button>Erase Sketch</button></div>
-   <div class="container"></div>
+   <div class="heading"><h1>Sketcher</h1></div>
+   <div class="container">
+      <div class="main-menu">
+         <div class="menu-item" id="colorBtn"> <span>Color</span> <input type="color" id="color-pick"> </div>
+         <div class="menu-item" id="rainbowBtn"><span>Rainbow</span></div>
+         <div class="menu-item" id="eraserBtn"><span>Eraser</span></div>
+         <div class="menu-item" id="clearBtn"><span>Clear</span></div>
+      </div>
+      <div class="grid"></div>
+   </div>
+   <div id="slider"><input type="range" min="10" max="64" step="1"><span>16x16</span></div>
    <script src="Main.js" ></script>
 </body>
 </html>

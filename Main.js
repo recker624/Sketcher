@@ -1,68 +1,141 @@
 "use strict"
 
-const GRID_MIN = 40;
-const GRID_MAX = 100;
+const GRID_MIN = 10;
+const GRID_MAX = 64;
+const SLIDER_STEP = 1;
 let gridArray = [];
+let colorMode = "color";
 
-function start() {
-   let input = userInput();
-   if(userInput == null){
-      return;
+const colorButton = document.querySelector("#colorBtn");
+const rainbowButton = document.querySelector("#rainbowBtn");
+const eraserButton = document.querySelector("#eraserBtn");
+const clearButton = document.querySelector("#clearBtn"); 
+const gridSlider = document.querySelector("#slider input[type=range]");
+const grid = document.querySelector(".grid");
+
+grid.addEventListener("mouseover", setMouseOver);
+grid.addEventListener("mouseover", setDrawValue);
+grid.addEventListener("mousedown", setMouseDown);
+
+colorButton.addEventListener("click", setColorMode);
+rainbowButton.addEventListener("click", setColorMode);
+eraserButton.addEventListener("click", setColorMode);
+
+clearButton.addEventListener("click", () => {
+   for(let item of gridArray){
+      item.style.backgroundColor = "white";
+      colorMode = "color"
    }
-   createGrid(input);
-   colorGrid(gridArray);
-   clearButton();
+});
+
+gridSlider.addEventListener("click",() => {
+   createGrid();
+   colorGrid();
+});
+gridSlider.addEventListener("mousemove", updateSliderDisplay)
+
+
+
+function setMouseOver() {
+   return true;
 }
 
-function userInput(){
-   while(true) {
-      let cells = prompt("Enter the number of cells");
-      if(cells == null) {
-         return null;
-      }
-      if(+cells < GRID_MIN){
-         alert(`Minimum number of cells is ${GRID_MIN}. Enter a higher value.`)
-      } 
-      else if(+cells > GRID_MAX) {
-         alert(`Maximum allowed cell limit is ${GRID_MAX}. Enter a lower value.`);
-      }
-      else {
-         return +cells;
-      }
+function setMouseDown() {
+   return true;
+}
+
+function setDrawValue() {
+   if(setMouseDown() && setMouseOver()) {
+      
    }
 }
 
-function createGrid(cells) {
+
+
+function colorGrid() {
+   if(canDraw()) {
+      for(let item of gridArray) {
+         item.addEventListener("mouseover", setGridColor);
+      }
+   }
+   
+}
+
+function setGridColor(event){
+   switch(colorMode){
+      case "color": {
+            let colorValue = document.querySelector("#color-pick").value;
+            event.target.style.backgroundColor = colorValue;
+         }
+         break;
+      case "rainbow": {
+            let red = Math.floor(Math.random() * 256);
+            let green = Math.floor(Math.random() * 256);
+            let blue = Math.floor(Math.random() * 256);
+            event.target.style.backgroundColor = `rgb(${red},${green},${blue})`;
+         }
+         break;
+      
+      case "eraser": {
+            event.target.style.backgroundColor = "white";
+         }
+         break;
+   }
+}
+
+function setColorMode() {
+   switch(this.getAttribute("id")){
+      case "colorBtn":
+         colorMode = "color";
+         break;
+      case "rainbowBtn":
+         colorMode = "rainbow";
+         break;
+      case "eraserBtn":
+         colorMode = "eraser";
+         break;
+   }
+}
+
+function updateSliderDisplay() {
+   let sizeDisplay = document.querySelector("#slider span");
+   sizeDisplay.textContent = `${gridSlider.value}x${gridSlider.value}`;
+}
+
+function createGrid() {
+   gridArray = [];
+   let cells = gridSlider.value;
    for(let i = 0; i < cells**2; i++) {
       let temp = document.createElement("div");
-      temp.classList.add("gridItem");
       gridArray.push(temp);
    }
 
-   let container = document.querySelector(".container");
+   grid.innerHTML = "";
 
-   let containerWidth = container.clientWidth;
-   let containerHeight = container.clientHeight;
+   let gridWidth = grid.clientWidth;
+   let gridHeight = grid.clientHeight;
 
-   container.style.gridTemplateColumns = `repeat(${cells}, ${(containerWidth/cells).toFixed(2)}px)`;
-   container.style.gridAutoRows = `${(containerHeight/cells).toFixed(2)}px`;
+   grid.style.gridTemplateColumns = `repeat(${cells}, ${(gridWidth/cells).toFixed(2)}px)`;
+   grid.style.gridAutoRows = `${(gridHeight/cells).toFixed(2)}px`;
 
    for(let item of gridArray) {
-      container.append(item);
+      grid.append(item);
    }
+
+   //also update the grid size displayed
+
 }
 
-function colorGrid(gridArray) {
-   for(let item of gridArray) {
-      item.addEventListener("mouseover", (event) => {
-         event.target.classList.add("changeBg");
-      }, {once: true});
-   }
+function setGridData(){
+   gridSlider.min = GRID_MIN;
+   gridSlider.max = GRID_MAX
+   gridSlider.step = SLIDER_STEP;
 }
 
-function clearButton() {
-   let clearButton = document.querySelector(".clearBtn button");
-   clearButton.addEventListener("click", () => location.reload());
+function start() {
+   setGridData();
+   createGrid();
+   colorGrid();
 }
 
 start();
