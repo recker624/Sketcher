@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
+
 * {
    box-sizing: border-box;
+   user-select: none;
 }
 
 .heading {
@@ -34,6 +36,7 @@
  .main-menu{
    display: flex;
    flex-direction: column;
+   align-items: center;
    gap: 30px;
    margin-left: 5%;
 }
@@ -43,19 +46,18 @@
    width: 150px;
    padding: 0.5em 1em;
    text-align: center;
-   color: #fff;
+   color: #31f817;
    font-family: 'Shadows Into Light', cursive;
    font-size: 1.5rem;
    border: none;
    border: 2px solid #aaa;
    border-radius: 1em;
-   background-color: #31f817;
+   background-color: #fff;
    transition: transform 50ms;
    line-height: 100%;
    box-shadow: 0 5px 10px 1px #47474756;
    letter-spacing: 2px;
    font-weight: 900;
-
 }
 
 .menu-item:hover{
@@ -71,7 +73,18 @@
    gap: 10px;
 }
 
-.grid {
+.menu-item:nth-child(5){
+   color: white;
+   background-color: #3ec2ffd5;
+   width: fit-content;
+}
+
+#clearBtn {
+   background-color: #f85321;
+   color: white;
+}
+
+#grid {
    width: 500px;
    height: 500px;
    display: grid;
@@ -81,12 +94,17 @@
    box-shadow: 0 10px 20px 1px #47474756;
 }
 
+.grid-item {
+   border: 1px solid #b1b1b152;
+}
+
 #slider {
    width: 500px;
    position: relative;
    top: 8vh;
    margin: 0 auto;
    display: flex;
+   flex-direction: column;
    justify-content: flex-start;
    align-items: center;
    gap: 10px;
@@ -100,4 +118,14 @@
    font-family: 'Shadows Into Light', cursive;
    font-size: 2rem;
    letter-spacing: 3px;
+ }
+
+ .active {
+   background-color: #31f817;
+   color: white;
+ }
+
+ .inactive{
+   background-color: white;
+   color:#31f817;
  }
