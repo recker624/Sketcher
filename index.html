@@ -1,0 +1,28 @@
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="Main.css">
+   <title>Sketcher</title>
+</head>
+<body>
+   <div class="heading"><h1>Sketcher</h1></div>
+   <div class="container">
+      <div class="main-menu">
+         <div class="menu-item active" id="colorBtn"> <span>Color</span> <input type="color" id="color-pick"> </div>
+         <div class="menu-item" id="rainbowBtn"><span>Rainbow</span></div>
+         <div class="menu-item" id="eraserBtn"><span>Eraser</span></div>
+         <div class="menu-item" id="clearBtn"><span>Clear</span></div>
+         <div class="menu-item" id="toogleGridBtn"><span>Show Grid</span></div>
+         <!-- <div class="menu-item" id="downloadBtn"><img src="" alt=""></div> -->
+      </div>
+      <div id="grid"></div>
+   </div>
+   <div id="slider">
+      <input type="range" min="10" max="64" step="1">
+      <span>37x37</span>
+   </div>
+   <script src="Main.js" ></script>
+</body>
+</html>
