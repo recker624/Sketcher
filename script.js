@@ -206,9 +206,7 @@ function start() {
 
    gridSlider.addEventListener("mousemove", updateSliderDisplay)
 
-   downloadSketch();
+   // downloadSketch();
 }
 
 start();
-
-
